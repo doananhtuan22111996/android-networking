@@ -1,0 +1,11 @@
+[versions]
+corePlugins = "1.0.1"
+coreDomain = "1.0.0"
+coreData = "1.0.0"
+
+[libraries]
+corePlugins = { group = "vn.core.libs", name = "plugins", version.ref = "corePlugins" }
+coreDomain = { group = "vn.core.libs", name = "domain", version.ref = "coreDomain" }
+coreData = { group = "vn.core.libs", name = "data", version.ref = "coreData" }
+
+[plugins]
