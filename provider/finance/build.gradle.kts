@@ -1,88 +1,28 @@
+import vn.core.buildSrc.Configs
+
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
-    id("kotlin-kapt")
-    alias(libs.plugins.androidHilt)
-    `maven-publish`
+    vn.core.plugins.androidLibrary
+    vn.core.plugins.androidPublishing
 }
 
 android {
-    namespace = Configs.Finance.namespace
-    compileSdk = Configs.compileSdk
-
-    defaultConfig {
-        minSdk = Configs.minSdk
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = Configs.javaVersion
-        targetCompatibility = Configs.javaVersion
-    }
-    kotlinOptions {
-        jvmTarget = Configs.jvmTarget
-    }
-    buildFeatures {
-        buildConfig = true
-    }
-    publishing {
-        multipleVariants("all") {
-            allVariants()
-            withSourcesJar()
-        }
-    }
+    namespace = Configs.Namespace.FINANCE
 }
 
 publishing {
-    val ghUsername = System.getenv("GH_USERNAME")
-    val ghPassword = System.getenv("GH_TOKEN")
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("${Configs.mavenDomain}/${ghUsername}/android-networking")
-            credentials {
-                username = ghUsername
-                password = ghPassword
-            }
-        }
-    }
     publications {
-        create<MavenPublication>("mavenAndroid") {
+        create<MavenPublication>(Configs.Artifact.Finance.ARTIFACT_ID) {
             afterEvaluate {
                 from(components["all"])
             }
-            groupId = Configs.Finance.groupId
-            artifactId = Configs.Finance.artifactId
-            version = Configs.Finance.version
+            groupId = Configs.Artifact.Finance.GROUP_ID
+            artifactId = Configs.Artifact.Finance.ARTIFACT_ID
+            version = Configs.Artifact.Finance.VERSION
         }
     }
 }
 
 dependencies {
-    implementation(libs.coreLibxDomain)
-    implementation(libs.coreLibxData)
-    implementation(libs.bundles.coreAndroidComponents)
-    implementation(libs.androidxHilt)
-    kapt(libs.androidxHiltCompiler)
-    implementation(libs.retrofit)
-    implementation(libs.retrofitGson)
-    implementation(libs.loggerOkhttp)
-    implementation(libs.loggerTimber)
-    testImplementation(libs.bundles.testComponents)
-    androidTestImplementation(libs.bundles.androidTestComponents)
-}
-
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
+    implementation(libs.coreDomain)
+    implementation(libs.coreData)
 }
