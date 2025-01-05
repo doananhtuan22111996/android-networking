@@ -8,10 +8,10 @@ import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import vn.core.provider.finance.BuildConfig
 import vn.core.data.di.AnoHttpAuthenticatorInterceptor
 import vn.core.data.di.AnoHttpLoggingInterceptor
 import vn.core.data.local.PreferenceWrapper
+import vn.core.provider.finance.BuildConfig
 import vn.core.provider.finance.Configs
 import vn.core.provider.finance.network.HttpAuthenticatorInterceptor
 import java.util.concurrent.TimeUnit
@@ -24,9 +24,7 @@ internal class NetworkModule {
     @Provides
     @Singleton
     @AnoHttpAuthenticatorInterceptor
-    fun bindHttpAuthenticatorInterceptor(preferenceWrapper: PreferenceWrapper): HttpAuthenticatorInterceptor {
-        return HttpAuthenticatorInterceptor(preferenceWrapper)
-    }
+    fun bindHttpAuthenticatorInterceptor(preferenceWrapper: PreferenceWrapper): HttpAuthenticatorInterceptor = HttpAuthenticatorInterceptor(preferenceWrapper)
 
     @Provides
     @Singleton

@@ -10,7 +10,7 @@ object Configs {
         object Finance {
             const val GROUP_ID = "vn.core.provider"
             const val ARTIFACT_ID = "finance-networking"
-            const val VERSION = "1.0.0"
+            const val VERSION = "1.0.1"
         }
     }
 }

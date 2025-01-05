@@ -16,6 +16,5 @@ internal class LocalModule {
 
     @Provides
     @Singleton
-    fun providePreferenceWrapper(@ApplicationContext androidContext: Context): PreferenceWrapper =
-        PreferenceWrapper(context = androidContext, name = BuildConfig.LIBRARY_PACKAGE_NAME)
+    fun providePreferenceWrapper(@ApplicationContext androidContext: Context): PreferenceWrapper = PreferenceWrapper(context = androidContext, name = BuildConfig.LIBRARY_PACKAGE_NAME)
 }

@@ -16,15 +16,15 @@ import vn.core.provider.finance.model.TokenRaw
 import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 
 class HttpAuthenticatorInterceptor(
-    private val preferenceWrapper: PreferenceWrapper
+    private val preferenceWrapper: PreferenceWrapper,
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         Timber.d("Request URL: ${response.request.url}")
         val requestUrl = response.request.url.toString()
-        val ignored = requestUrl.contains("login")
-                || requestUrl.contains("refreshToken")
-                || requestUrl.contains("sign-up")
+        val ignored = requestUrl.contains("login") ||
+            requestUrl.contains("refreshToken") ||
+            requestUrl.contains("sign-up")
         if (response.code == HTTP_UNAUTHORIZED && !ignored) {
             try {
                 val refreshToken =
@@ -56,10 +56,12 @@ class HttpAuthenticatorInterceptor(
                 val tokenRaw = objResponse.data as? TokenRaw
                 Timber.d("Refresh Token Success: ${tokenRaw?.refreshToken}")
                 preferenceWrapper.saveString(
-                    Configs.SharePreference.KEY_AUTH_TOKEN, tokenRaw?.token ?: ""
+                    Configs.SharePreference.KEY_AUTH_TOKEN,
+                    tokenRaw?.token ?: "",
                 )
                 preferenceWrapper.saveString(
-                    Configs.SharePreference.KEY_AUTH_REFRESH_TOKEN, tokenRaw?.refreshToken ?: ""
+                    Configs.SharePreference.KEY_AUTH_REFRESH_TOKEN,
+                    tokenRaw?.refreshToken ?: "",
                 )
                 onCallBack()
             } else {
